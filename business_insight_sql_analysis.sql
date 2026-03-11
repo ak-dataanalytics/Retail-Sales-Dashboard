@@ -3,7 +3,18 @@ analyzed to identify revenue drivers, customer retention patterns, and month-ove
 
 use storesales
 
+--previewing the data
+
 select top 10* from sales
+
+--checking null values
+SELECT
+SUM(CASE WHEN customer_id IS NULL THEN 1 ELSE 0 END) AS null_customer
+FROM sales
+
+--creating index 
+CREATE INDEX idx_sales_customer
+ON sales(customer_id);
 
 --total revenue generated, total customers and total products
 
@@ -353,4 +364,5 @@ from sales
 group by customer_id)t )r
 cross join (select sum(sales)as total from sales)s
 )a
+
 
